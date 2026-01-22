@@ -14,7 +14,7 @@ try:
 except:
     pass
 
-from compas.geometry import length_vector
+from uw_opensees.utilities.geometry import length_vector
 
 
 TPL = """

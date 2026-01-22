@@ -7,10 +7,10 @@ except:
     pass
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from compas.datastructures import Mesh
-from compas.geometry import length_vector
-from compas.geometry import scale_vector
-from compas.geometry import normalize_vector
+from uw_opensees.utilities.geometry import Mesh
+from uw_opensees.utilities.geometry  import length_vector
+from uw_opensees.utilities.geometry  import scale_vector
+from uw_opensees.utilities.geometry  import normalize_vector
 # from compas.utilities import i_to_rgb
 
 

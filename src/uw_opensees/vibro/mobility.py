@@ -18,7 +18,7 @@ from uw_opensees.vibro.utilities import calculate_distance_matrix_np
 from uw_opensees.vibro.utilities import make_area_matrix
 from uw_opensees.vibro.utilities import make_diagonal_area_matrix
 
-from compas.geometry import length_vector
+from uw_opensees.utilities.geometry import length_vector
 from uw_opensees.utilities.geometry import geometric_key
 
 

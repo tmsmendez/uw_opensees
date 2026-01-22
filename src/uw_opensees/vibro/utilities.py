@@ -1,5 +1,5 @@
-from compas.geometry import area_polygon
-from compas.geometry import centroid_points
+from uw_opensees.utilities.geometry import area_polygon
+from uw_opensees.utilities.geometry import centroid
 
 
 try:

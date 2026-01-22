@@ -10,7 +10,7 @@ __email__      = 'tmendeze@uw.edu'
 
 import plotly.graph_objects as go
 # import plotly.io as pio
-from compas.datastructures import Mesh
+from uw_opensees.utilities.geometry import Mesh
 
 
 

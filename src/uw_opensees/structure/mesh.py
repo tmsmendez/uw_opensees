@@ -1,7 +1,7 @@
-from compas.datastructures import Mesh
+from uw_opensees.utilities.geometry import Mesh
 from uw_opensees.utilities.geometry import geometric_key
-from compas.geometry import centroid_points_xy
-from compas.geometry import distance_point_point_xy
+from uw_opensees.utilities.geometry import centroid_points_xy
+from uw_opensees.utilities.geometry import distance_point_point_xy
 
 class Mesh(Mesh):
 

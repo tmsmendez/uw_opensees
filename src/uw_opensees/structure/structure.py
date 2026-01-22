@@ -6,9 +6,9 @@ import os
 import pickle
 import json
 
-from compas.geometry import area_polygon
+from uw_opensees.utilities.geometry import area_polygon
 
-from compas.datastructures import Mesh
+from uw_opensees.utilities.geometry import Mesh
 
 from uw_opensees.structure._mixins.nodemixins import NodeMixins
 from uw_opensees.structure._mixins.elementmixins import ElementMixins
@@ -25,10 +25,10 @@ from uw_opensees.structure.element_properties import ElementProperties
 from uw_opensees.vibro.rayleigh import compute_rad_power_structure
 from uw_opensees.vibro import from_W_to_dB
 
-from compas.geometry import centroid_points
-from compas.geometry import distance_point_point
-from compas.geometry import rotate_points
-from compas.geometry import subtract_vectors
+from uw_opensees.utilities.geometry import centroid
+from uw_opensees.utilities.geometry import distance_point_point
+from uw_opensees.utilities.geometry import rotate_points
+from uw_opensees.utilities.geometry import subtract_vectors
 
 __author__     = ['Tomas Mendez Echenagucia <tmendeze@uw.edu>']
 __copyright__  = 'Copyright 2022, Design Machine Group - University of Washington'

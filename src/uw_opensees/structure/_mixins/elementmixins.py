@@ -2,8 +2,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from compas.geometry import centroid_points
-
+from uw_opensees.utilities.geometry import centroid
 from uw_opensees.utilities.geometry import geometric_key
 
 from uw_opensees.structure.element import ShellElement
@@ -128,8 +127,8 @@ class ElementMixins(object):
 
         """
 
-        centroid = centroid_points([self.node_xyz(node) for node in nodes])
-        gkey     = geometric_key(centroid, self.tol)
+        cpt = centroid([self.node_xyz(node) for node in nodes])
+        gkey     = geometric_key(cpt, self.tol)
 
         if virtual:
             self.virtual_element_index[gkey] = key
@@ -161,7 +160,7 @@ class ElementMixins(object):
         """
 
         if not xyz:
-            xyz = centroid_points([self.node_xyz(node) for node in nodes])
+            xyz = centroid([self.node_xyz(node) for node in nodes])
 
         gkey = geometric_key(xyz, '{0}f'.format(self.tol))
 
@@ -203,7 +202,7 @@ class ElementMixins(object):
 
         """
         nodes = [self.node_xyz(nk) for nk in self.elements[element].nodes]
-        return centroid_points(nodes)
+        return centroid(nodes)
 
     def assign_element_property(self, element_property):
 

@@ -9,7 +9,7 @@ from uw_opensees.structure import ISection, BoxSection, RectangularSection
 from uw_opensees.structure import ElasticIsotropic
 from uw_opensees.structure import ElementProperties
 from uw_opensees.viewers import StructureViewer
-
+from uw_opensees.utilities.geometry import length_vector
 
 
 def make_tower(w, l, h, num_s):
@@ -111,7 +111,7 @@ def compute_nat_freq(columns, beams, braces):
     print(s.results['modal'].keys())
     # return s.results['modal'][0].frequency
 
-def compute_max_disp(columns, beams, braces):
+def compute_max_disp(columns, beams, braces, visualize=True):
     path = uw_opensees.TEMP
     name = 'Arch598_model'
 
@@ -169,11 +169,11 @@ def compute_max_disp(columns, beams, braces):
 
     s.analyze_static(backend='opensees', fields=['u'], exe=exe)
 
-    visualize = True
     if visualize:
         v = StructureViewer(s)
         v.static_scale = 20
         v.show('static')
+
 
     save_file=False
     if save_file:
@@ -191,6 +191,7 @@ def compute_max_disp(columns, beams, braces):
 
 
 if __name__ == '__main__':
+    from uw_opensees.viewers import MeshViewer
 
     for i in range(50): print('')
 
@@ -203,5 +204,5 @@ if __name__ == '__main__':
 
     co, be, br = make_tower(w, l, h, num_s)
     # compute_nat_freq(co, be, br)
-    m = compute_max_disp(co, be, br)
+    m = compute_max_disp(co, be, br, visualize=True)
     print(m)

@@ -14,17 +14,17 @@ from math import copysign
 
 import plotly.graph_objects as go
 
-from uw_opensees.structure import Mesh
+from uw_opensees.utilities.geometry import Mesh
 
-from compas.geometry import subtract_vectors
-from compas.geometry import normalize_vector
-from compas.geometry import cross_vectors
-from compas.geometry import scale_vector
-from compas.geometry import add_vectors
-from compas.geometry import length_vector
-from compas.geometry import rotate_points
-from compas.geometry import dot_vectors
-from compas.geometry import centroid_points
+from uw_opensees.utilities.geometry  import subtract_vectors
+from uw_opensees.utilities.geometry  import normalize_vector
+from uw_opensees.utilities.geometry  import cross_vectors
+from uw_opensees.utilities.geometry  import scale_vector
+from uw_opensees.utilities.geometry  import add_vectors
+from uw_opensees.utilities.geometry  import length_vector
+from uw_opensees.utilities.geometry  import rotate_points
+from uw_opensees.utilities.geometry  import dot_vectors
+from uw_opensees.utilities.geometry  import centroid
 
 # TODO: Add harmonic mode participation factors
 # TODO: Add modal effective masses
@@ -130,7 +130,7 @@ class StructureViewer(object):
             vertices = [self.structure.nodes[vk].xyz() for vk in nodes]
         faces = [self.structure.elements[ek].nodes for ek in elements]
         self.mesh = Mesh.from_vertices_and_faces(vertices, faces)
-        self.mesh.cull_vertices()
+        # self.mesh.cull_vertices()
 
     def make_layout(self):
         name = self.structure.name
@@ -233,6 +233,7 @@ class StructureViewer(object):
         self.add_beams_mesh(beam_mesh)
 
     def add_beams_mesh(self, beam_mesh):
+
         edges = [[beam_mesh.vertex_coordinates(u), beam_mesh.vertex_coordinates(v)] for u,v in beam_mesh.edges()]
         line_marker = dict(color='rgb(0,0,0)', width=1.5)
         lines = []
@@ -281,6 +282,7 @@ class StructureViewer(object):
                 )]
         self.data.extend(lines)
         self.data.extend(faces)
+        self.beam_mesh = beam_mesh
 
     def add_beam_to_mesh(self, beam_mesh, sec_pts_list, ek, mode=None, frequency=None,  load_step=None):
         
@@ -797,7 +799,7 @@ class StructureViewer(object):
             eks.append(ek)
             node = self.structure.elements[ek].nodes
             xyz = [self.structure.node_xyz(nk) for nk in node]
-            nodes.append(centroid_points(xyz))
+            nodes.append(centroid(xyz))
             ets.append(self.structure.elements[ek].__name__)
 
         x = [nk[0] for nk in nodes]
@@ -937,7 +939,6 @@ class StructureViewer(object):
 
         fig.update_layout(sliders=self.sliders)
         fig.update_layout(legend_orientation="h")
-
         fig.show()
 
     def show_modal(self):

@@ -11,7 +11,7 @@ __email__      = 'tmendeze@uw.edu'
 for i in range(50): print('')
 
 # from compas.utilities import i_to_rgb
-from compas.geometry import length_vector
+from uw_opensees.utilities.geometry import length_vector
 
 import plotly.graph_objects as go
 import plotly.io as pio
@@ -30,7 +30,8 @@ class MeshViewer(object):
         self.show_face_labels   = False
 
     def make_layout(self):
-        name = self.mesh.name
+        # name = self.mesh.name
+        name = 'Mesh'
         title = '{0}'.format(name)
         layout = go.Layout(title=title,
                           scene=dict(aspectmode='data',
@@ -74,16 +75,15 @@ class MeshViewer(object):
 
         lines = [go.Scatter3d(x=x, y=y, z=z, mode='lines', line=line_marker)]
 
-        self.mesh.quads_to_triangles()
-        fks = []
-        for fk in self.mesh.faces():
-            nv = len(self.mesh.face_vertices(fk))
-            if nv >= 4:
-                fks.append(fk)
-        for fk in fks:
-            self.mesh.insert_vertex(fk)
+        vertices, faces = self.mesh.to_vertices_and_faces()
 
-        vertices, triangles = self.mesh.to_vertices_and_faces()
+        triangles = []
+        for face in faces:
+            triangles.append(face[:3])
+            if len(face) == 4:
+                triangles.append([face[2], face[3], face[0]])
+
+        # vertices, triangles = self.mesh.to_vertices_and_faces()
         
         i = [v[0] for v in triangles]
         j = [v[1] for v in triangles]
@@ -138,16 +138,22 @@ class MeshViewer(object):
 
 if __name__ == '__main__':
     import os
-    from compas.datastructures import Mesh
+    from uw_opensees.utilities.geometry import Mesh
     import uw_opensees
 
     for i in range(50): print('')
-    
-    # name = 'clt_1_remeshed'
-    # filepath = os.path.join(timber_vibro.DATA, 'other', '{}.json'.format(name))
-    
-    filepath = os.path.join(uw_opensees.DATA, 'meshes', 'pattern1_fins.json')
-    mesh = Mesh.from_json(filepath)
+
+    vertices = [[0,0,0],
+                [1,0,0],
+                [1,1,0],
+                [0,1,0],
+                [2,0,0],
+                [2,1,0]]
+
+    # faces = [[0,1,2], [0,2,3], [1,4,2], [2,4,5]]
+    faces = [[0,1,2,3], [1,4,2], [2,4,5]]
+
+    mesh = Mesh.from_vertices_and_faces(vertices, faces)
     pl = MeshViewer(mesh)
     pl.show()
 
