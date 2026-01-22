@@ -1,0 +1,8 @@
+pyproject.toml
+src/__init__.py
+src/setup.py
+src/uw_opensees.egg-info/PKG-INFO
+src/uw_opensees.egg-info/SOURCES.txt
+src/uw_opensees.egg-info/dependency_links.txt
+src/uw_opensees.egg-info/requires.txt
+src/uw_opensees.egg-info/top_level.txt

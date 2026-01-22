@@ -1,0 +1,29 @@
+[project]
+name = "uw_opensees"
+version = "0.1.0"
+description = "uw opensees python wrapper"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+keywords = ["example", "library"]
+authors = [
+  {name = "Tomas Mendez Echenagucia", email = "tmendeze@uw.edu"},
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "requests >= 2.25.1",
+    "numpy",
+]
+
+[project.urls]
+Homepage = "https://github.com"
+"Bug Tracker" = "https://github.com/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
