@@ -387,6 +387,7 @@ class Mesh(object):
                     edge = vks[i], vks[i + 1]
                 else:
                     edge = vks[i], vks[0]
+
                 if edge not in edges_ and (edge[1], edge[0] not in edges_):
                     edges_.append(edge)
         return edges_

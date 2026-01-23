@@ -127,13 +127,13 @@ class Structure(NodeMixins, ElementMixins, ObjectMixins):
 
         """
 
-        for key in sorted(list(mesh.vertices()), key=int):
+        for key in sorted(list(mesh.vertices), key=int):
             self.add_node(mesh.vertex_coordinates(key))
 
         ekeys = []
 
-        for fkey in list(mesh.faces()):
-            face = [self.check_node_exists(mesh.vertex_coordinates(i)) for i in mesh.face[fkey]]
+        for fkey in list(mesh.faces):
+            face = [self.check_node_exists(mesh.vertex_coordinates(i)) for i in mesh.faces[fkey]]
             ekeys.append(self.add_element(nodes=face, type=element_type))
         if elset:
             self.add_set(name=elset, type='element', selection=ekeys)
@@ -216,7 +216,7 @@ class Structure(NodeMixins, ElementMixins, ObjectMixins):
         
     def add_gravity_from_mesh(self, mesh, thickness, density):
         num_loads = len(self.loads)
-        for vk in mesh.vertices():
+        for vk in mesh.vertices:
             area = mesh.vertex_area(vk)
             l = area * thickness * density
             nk = self.check_node_exists(mesh.vertex_coordinates(vk))

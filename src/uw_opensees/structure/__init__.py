@@ -16,7 +16,6 @@ from .material import *
 from .set import *
 from .step import *
 from .result import *
-from .mesh import *
 from .element import *
 
 __all__ = [name for name in dir() if not name.startswith('_')]

@@ -162,7 +162,7 @@ class ElementMixins(object):
         if not xyz:
             xyz = centroid([self.node_xyz(node) for node in nodes])
 
-        gkey = geometric_key(xyz, '{0}f'.format(self.tol))
+        gkey = geometric_key(xyz, self.tol)
 
         if virtual:
             return self.virtual_element_index.get(gkey, None)
