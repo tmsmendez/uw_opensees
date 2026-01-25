@@ -1,5 +1,0 @@
-Domain::addNodalLoad() - no node with tag 517 exists in the model, not adding the nodal load Nodal Load: 517 load : 0 0 -480 0 0 0 
-
-WARNING TclModelBuilder - could not add load to domain
-Input command: load 517 0 0 -480.0 0 0 0 
-WARNING - error reading load pattern information in { } 

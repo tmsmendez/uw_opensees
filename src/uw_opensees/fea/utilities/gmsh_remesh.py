@@ -1,6 +1,7 @@
 
 try:
     import gmsh
+    import numpy as np
 except:
     pass
 
@@ -33,10 +34,16 @@ class GMSH(object):
         v = gmsh.model.mesh.get_nodes()[1]
         f = gmsh.model.mesh.getElementFaceNodes(2, 3)
         f = [f[i].item() for i in f]
-        print(f)
 
-        vertices = [[v[i], v[i+1], v[i+2]] for i in range(0, len(v), 3)]
-        faces = [[f[i] - 1, f[i+1] - 1, f[i+2]- 1] for i in range(0, len(f), 3)]
+
+        _, node_coords, _ = gmsh.model.mesh.getNodes()
+        vertices = np.array(node_coords).reshape(-1, 3)
+
+        # --- Triangles ---
+        _, elem_node_tags = gmsh.model.mesh.getElementsByType(2)  # 2 = triangle
+
+        faces = np.array(elem_node_tags).reshape(-1, 3) - 1 
+        faces = [f.tolist() for f in faces]
 
         # gmsh.fltk.run()
 

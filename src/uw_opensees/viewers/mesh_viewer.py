@@ -112,7 +112,7 @@ class MeshViewer(object):
         self.data.extend(faces)
 
         if self.show_vertex_labels:
-            vertices = list(self.mesh.vertices())
+            vertices = list(self.mesh.vertices)
             x = [self.mesh.vertex_coordinates(nk)[0] for nk in vertices]
             y = [self.mesh.vertex_coordinates(nk)[1] for nk in vertices]
             z = [self.mesh.vertex_coordinates(nk)[2] for nk in vertices]

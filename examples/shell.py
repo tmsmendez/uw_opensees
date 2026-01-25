@@ -1,7 +1,7 @@
 import uw_opensees
 from uw_opensees.structure import Structure
 from uw_opensees.structure import FixedDisplacement
-# from uw_opensees.structure import PointLoad
+from uw_opensees.structure import PointLoad
 from uw_opensees.structure import ShellSection
 from uw_opensees.structure import ElasticIsotropic
 from uw_opensees.structure import ElementProperties
@@ -65,60 +65,74 @@ def compute_max_disp(mesh, thickness, exe='', visualize=True):
 
     s = Structure(path, name)
 
-    mesh = remesh_mesh(mesh, .5)
+    mesh = remesh_mesh(mesh, .4)
 
 
-    v = MeshViewer(mesh)
-    v.show()
+    # v = MeshViewer(mesh)
+    # v.show_vertex_labels = False
+    # v.show()
 
-    # s.add_nodes_elements_from_mesh(mesh, 'ShellElement', elset='shell')
+    s.add_nodes_elements_from_mesh(mesh, 'ShellElement', elset='shell')
 
-    # # bound = mesh.vertices_on_boundary()
-    # bound = [0,1,2,3,4, 5, 6]
-
-
-    # d = FixedDisplacement('boundary', bound)
-    # s.add(d)
-
-    # section = ShellSection('shell_sec', t=thickness)
-    # s.add(section)
-
-    # material = ElasticIsotropic('concrete', E=30e9, v=.2, p=2400)
-    # s.add(material)
+    # bound = mesh.vertices_on_boundary()
+    bound = [0,1,2,3]
 
 
-    # el_prop = ElementProperties('concrete_shell',
-    #                             material='concrete',
-    #                             section='shell_sec',
-    #                             elset='shell')
-    # s.add(el_prop)
+    d = FixedDisplacement('boundary', bound)
+    s.add(d)
+
+    section = ShellSection('shell_sec', t=thickness)
+    s.add(section)
+
+    material = ElasticIsotropic('concrete', E=30e9, v=.2, p=2400)
+    s.add(material)
+
+
+    el_prop = ElementProperties('concrete_shell',
+                                material='concrete',
+                                section='shell_sec',
+                                elset='shell')
+    s.add(el_prop)
 
 
     # s.add_gravity_from_mesh(mesh, thickness, 2400)
 
-    # s.analyze_static(backend='opensees', fields=['u'], exe=exe)
+    nl = PointLoad('point_load', [8], z=-1000)
+    s.add_load(nl)
+
+    if visualize:
+        v = StructureViewer(s)
+        v.show_node_labels = True
+        v.show_point_loads = True
+        v.show()
+
+
+    s.analyze_static(backend='opensees', fields=['u'], exe=exe)
     
-    # if visualize:
-    #     v = StructureViewer(s)
-    #     v.static_scale = 20000
-    #     v.show('static')
-
-    # xs = s.results['static'][0].displacements['ux']
-    # ys = s.results['static'][0].displacements['uy']
-    # zs = s.results['static'][0].displacements['uz']
+    if visualize:
+        v = StructureViewer(s)
+        v.show_node_labels = True
+        v.show_point_loads = True
+        v.show('static')
 
 
-    # vls = []
-    # for i in range(len(xs)):
-    #     vl = length_vector([xs[i], ys[i], zs[i]])
-    #     vls.append(vl)
-    # return max(vls)
+
+    xs = s.results['static'][0].displacements['ux']
+    ys = s.results['static'][0].displacements['uy']
+    zs = s.results['static'][0].displacements['uz']
+
+
+    vls = []
+    for i in range(len(xs)):
+        vl = length_vector([xs[i], ys[i], zs[i]])
+        vls.append(vl)
+    return max(vls)
 
 
 if __name__ == '__main__':
 
 
-    #TODO: getting GMSH faces seems to be broken, wrong face order, figure a better way
+    for i in range(50): print('')
 
     from uw_opensees.utilities.geometry import Mesh
     from uw_opensees.viewers import MeshViewer
@@ -139,6 +153,7 @@ if __name__ == '__main__':
     # print(mesh)
 
     # v = MeshViewer(mesh)
+    # v.show_vertex_labels = True
     # v.show()
 
     exe = '/Applications/OpenSees3.3.0/bin/OpenSees'

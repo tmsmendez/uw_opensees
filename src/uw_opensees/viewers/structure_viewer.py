@@ -623,7 +623,7 @@ class StructureViewer(object):
             if mode == None:
                 mode = 0
             # for nk in self.structure.nodes:
-            for nk in mesh.vertex:
+            for nk in mesh.vertices:
                 dx = self.structure.results[visualization_type][mode].displacements['ux'][nk]
                 dy = self.structure.results[visualization_type][mode].displacements['uy'][nk]
                 dz = self.structure.results[visualization_type][mode].displacements['uz'][nk]
