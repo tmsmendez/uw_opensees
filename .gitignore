@@ -136,3 +136,5 @@ docs/api/generated/
 .ruff_cache
 
 *.pyc
+
+OpenSees3.7.1/

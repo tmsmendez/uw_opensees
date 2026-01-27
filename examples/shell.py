@@ -156,7 +156,8 @@ if __name__ == '__main__':
     # v.show_vertex_labels = True
     # v.show()
 
-    exe = '/Applications/OpenSees3.3.0/bin/OpenSees'
+    # exe = '/Applications/OpenSees3.3.0/bin/OpenSees'
+    exe = '/Applications/OpenSees3.7.1/bin/OpenSees'
 
     max_disp = compute_max_disp(mesh, thickness, exe=exe, visualize=True)
 

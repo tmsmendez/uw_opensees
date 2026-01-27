@@ -195,7 +195,8 @@ if __name__ == '__main__':
 
     for i in range(50): print('')
 
-    exe = '/Applications/OpenSees3.3.0/bin/OpenSees'
+    # exe = '/Applications/OpenSees3.3.0/bin/OpenSees'
+    exe = '/Applications/OpenSees3.7.1/bin/OpenSees'
 
     w = 14
     l = 10
