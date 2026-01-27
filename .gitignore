@@ -134,3 +134,5 @@ src/.build/**
 docs/api/generated/
 
 .ruff_cache
+
+*.pyc
