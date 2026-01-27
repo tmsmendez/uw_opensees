@@ -100,11 +100,11 @@ def compute_max_disp(mesh, thickness, exe='', visualize=True):
     nl = PointLoad('point_load', [8], z=-1000)
     s.add_load(nl)
 
-    if visualize:
-        v = StructureViewer(s)
-        v.show_node_labels = True
-        v.show_point_loads = True
-        v.show()
+    # if visualize:
+    #     v = StructureViewer(s)
+    #     v.show_node_labels = False
+    #     v.show_point_loads = True
+    #     v.show()
 
 
     s.analyze_static(backend='opensees', fields=['u'], exe=exe)

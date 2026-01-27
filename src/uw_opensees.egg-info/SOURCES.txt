@@ -34,7 +34,6 @@ src/uw_opensees/structure/element.py
 src/uw_opensees/structure/element_properties.py
 src/uw_opensees/structure/load.py
 src/uw_opensees/structure/material.py
-src/uw_opensees/structure/mesh.py
 src/uw_opensees/structure/node.py
 src/uw_opensees/structure/result.py
 src/uw_opensees/structure/section.py

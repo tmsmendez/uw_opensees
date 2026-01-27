@@ -14,3 +14,8 @@ Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 Requires-Dist: requests>=2.25.1
 Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: pandas
+Requires-Dist: plotly
+Requires-Dist: matplotlib
+Requires-Dist: gmsh
