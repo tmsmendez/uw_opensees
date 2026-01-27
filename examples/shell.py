@@ -41,7 +41,7 @@ def make_floor(w, l, a, b, h1, h2, h3):
 
     return vertices, faces
 
-def compute_max_disp(mesh, thickness, exe='', visualize=True):
+def compute_max_disp(mesh, thickness, visualize=True):
     """
     This function computes the maximum displacement of a structure made from
     a mesh. Boundary points are considered to be fixed supports.
@@ -107,7 +107,7 @@ def compute_max_disp(mesh, thickness, exe='', visualize=True):
     #     v.show()
 
 
-    s.analyze_static(backend='opensees', fields=['u'], exe=exe)
+    s.analyze_static(fields=['u'])
     
     if visualize:
         v = StructureViewer(s)
@@ -156,8 +156,5 @@ if __name__ == '__main__':
     # v.show_vertex_labels = True
     # v.show()
 
-    # exe = '/Applications/OpenSees3.3.0/bin/OpenSees'
-    exe = '/Applications/OpenSees3.7.1/bin/OpenSees'
-
-    max_disp = compute_max_disp(mesh, thickness, exe=exe, visualize=True)
+    max_disp = compute_max_disp(mesh, thickness, visualize=True)
 

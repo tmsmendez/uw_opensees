@@ -31,85 +31,6 @@ def make_tower(w, l, h, num_s):
         braces.extend([[a, b_], [b_, c,], [c, d_], [d_, a]])
     return columns, beams, braces
 
-def compute_nat_freq(columns, beams, braces):
-    path = uw_opensees.TEMP
-    name = 'Arch598_modal'
-
-    s = Structure(path, name)
-
-    cols_k = s.add_nodes_elements_from_lines(columns, 'BeamElement', elset='columns', normal=[1, 0, 0])
-    beam_k = s.add_nodes_elements_from_lines(beams, 'BeamElement', elset='beams', normal=[0, 0, 1])
-    brce_k = s.add_nodes_elements_from_lines(braces, 'BeamElement', elset='braces', normal=[0, 0, 1])
-
-    pts = [col[0] for col in columns[:4]]
-    fixed = [s.check_node_exists(pt) for pt in pts]
-    d = FixedDisplacement('corners', fixed)
-    s.add(d)
-
-
-    col_section = RectangularSection('col_sec',   b=.3, h=.3)
-    beam_section = RectangularSection('beam_sec',  b=.15, h=.25)
-    brace_section = RectangularSection('brace_sec',  b=.1, h=.1)
-    s.add(col_section)
-    s.add(beam_section)
-    s.add(brace_section)
-
-    clt_material = ElasticIsotropic('clt1', E=7e9, v=.42, p=500)
-    s.add(clt_material)
-    clt_material = ElasticIsotropic('clt2', E=7e9, v=.42, p=500)
-    s.add(clt_material)
-    clt_material = ElasticIsotropic('clt3', E=7e9, v=.42, p=500)
-    s.add(clt_material)
-
-
-    el_prop1 = ElementProperties('columns_elset',
-                                material='clt1',
-                                section='col_sec',
-                                elset='columns',
-                                is_rad=False)
-    s.add(el_prop1)
-
-
-    el_prop2 = ElementProperties('beams_elset',
-                                material='clt2',
-                                section='beam_sec',
-                                elset='beams',
-                                is_rad=False)
-    s.add(el_prop2)
-
-
-
-
-
-    el_prop3 = ElementProperties('braces_elset',
-                                    material='clt3',
-                                    section='brace_sec',
-                                    elset='braces',
-                                    is_rad=False)
-    s.add(el_prop3)
-
-    s.analyze_modal(backend='opensees', fields=['f', 'u'], num_modes=12, exe=exe)
-
-    visualize = False
-    if visualize:
-        v = StructureViewer(s)
-        v.show('modal')
-
-    print_data= True
-    if print_data:
-        modes = s.results['modal'].keys()
-        for mode in modes:
-            f = s.results['modal'][mode].frequency
-            m = s.results['modal'][mode].efmass['z']
-            mr = s.results['modal'][mode].efmass_r['z']
-            print(mode, f, m, mr)
-
-    save_file=False
-    if save_file:
-        s.to_obj()
-
-    print(s.results['modal'].keys())
-    # return s.results['modal'][0].frequency
 
 def compute_max_disp(columns, beams, braces, visualize=True):
     path = uw_opensees.TEMP
@@ -167,7 +88,7 @@ def compute_max_disp(columns, beams, braces, visualize=True):
     load = PointLoad(name='pload', nodes=cols_k, x=-1000, y=0, z=0, xx=0, yy=0, zz=0)
     s.add(load)
 
-    s.analyze_static(backend='opensees', fields=['u'], exe=exe)
+    s.analyze_static(fields=['u'])
 
     if visualize:
         v = StructureViewer(s)
@@ -195,15 +116,11 @@ if __name__ == '__main__':
 
     for i in range(50): print('')
 
-    # exe = '/Applications/OpenSees3.3.0/bin/OpenSees'
-    exe = '/Applications/OpenSees3.7.1/bin/OpenSees'
-
     w = 14
     l = 10
     h = 3
     num_s = 10
 
     co, be, br = make_tower(w, l, h, num_s)
-    # compute_nat_freq(co, be, br)
     m = compute_max_disp(co, be, br, visualize=True)
     print(m)

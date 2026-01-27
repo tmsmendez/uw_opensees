@@ -6,6 +6,8 @@ import os
 import pickle
 import json
 
+import uw_opensees
+
 from uw_opensees.utilities.geometry import area_polygon
 
 from uw_opensees.utilities.geometry import Mesh
@@ -265,53 +267,25 @@ class Structure(NodeMixins, ElementMixins, ObjectMixins):
             if elset:
                 self.sets[elset].remove_elements(eps[epk])
 
-    def analyze_modal(self, fields, backend='ansys', num_modes=10, exe=None):
+    def analyze_modal(self, fields, backend='opensees', num_modes=10, exe=uw_opensees.OPENSEES):
         self.compute_mass()
-        if backend == 'ansys':
-            ansys_modal(self, fields, num_modes=num_modes)
-        elif backend == 'opensees':
+        if backend == 'opensees':
             opensees_modal(self, fields, num_modes=num_modes, exe=exe)
         else:
             raise NameError('This backend is not implemented')
 
-    def analyze_modal_prestressed(self, fields, backend='ansys', num_modes=10, exe=None):
-        self.compute_mass()
-        if backend == 'ansys':
-            ansys_modal_prestressed(self, fields, num_modes=num_modes)
-        elif backend == 'opensees':
-            NameError('This backend is not implemented')
-        else:
-            raise NameError('This backend is not implemented')
-
-    def analyze_static(self, fields, backend='ansys', exe=None):
-        if backend == 'ansys':
-            ansys_static(self,fields)
-        elif backend == 'opensees':
+    def analyze_static(self, fields, backend='opensees', exe=uw_opensees.OPENSEES):
+        if backend == 'opensees':
             opensees_static(self, fields, exe=exe)
         else:
             raise NameError('This backend is not implemented')
 
-    def analyze_harmonic(self, freq_list, fields, damping=.02, backend='ansys', exe=None, selected_nodes=None):
-        if backend == 'ansys':
-            ansys_harmonic(self, freq_list, fields, damping=damping, selected_nodes=selected_nodes)
-        elif backend == 'opensees':
+    def analyze_harmonic(self, freq_list, fields, damping=.02, backend='opensees', exe=uw_opensees.OPENSEES, selected_nodes=None):
+        if backend == 'opensees':
             opensees_harmonic(self, freq_list, fields=fields, damping=damping, exe=exe)
         else:
             raise NameError('This backend is not implemented')
-        
-    def analyze_harmonic_super(self, num_modes, freq_list, fields, damping=.02, backend='ansys'):
-        self.compute_mass()
-        if backend == 'ansys':
-            ansys_harmonic_super(self, num_modes, freq_list, fields, damping=damping)
-        else:
-            raise NameError('This backend is not implemented yet')
-
-    def analyze_harmonic_field(self, num_modes, freq_list, fields, damping=.02, backend='ansys'):
-        self.compute_mass()
-        if backend == 'ansys':
-            ansys_harmonic_field(self, num_modes, freq_list, fields, damping=damping)
-        else:
-            raise NameError('This backend is not implemented')
+    
 
     def to_obj(self, output=True, path=None, name=None):
 
