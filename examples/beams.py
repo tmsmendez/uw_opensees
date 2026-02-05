@@ -41,8 +41,11 @@ def compute_max_disp(columns, beams, braces, visualize=True):
     cols_k = s.add_nodes_elements_from_lines(columns, 'BeamElement', elset='columns', normal=[1, 0, 0])
     beam_k = s.add_nodes_elements_from_lines(beams, 'BeamElement', elset='beams', normal=[0, 0, 1])
     brce_k = s.add_nodes_elements_from_lines(braces, 'BeamElement', elset='braces', normal=[0, 0, 1])
-
-    pts = [col[0] for col in columns[:4]]
+    
+    pts = []
+    for col in columns:
+        if col[0][2] <= .1:
+            pts.append(col[0])
     fixed = [s.check_node_exists(pt) for pt in pts]
     d = FixedDisplacement('corners', fixed)
     s.add(d)
@@ -119,7 +122,7 @@ if __name__ == '__main__':
     w = 14
     l = 10
     h = 3
-    num_s = 10
+    num_s = 20
 
     co, be, br = make_tower(w, l, h, num_s)
     m = compute_max_disp(co, be, br, visualize=True)

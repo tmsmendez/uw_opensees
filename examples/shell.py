@@ -129,32 +129,33 @@ def compute_max_disp(mesh, thickness, visualize=True):
     return max(vls)
 
 
-if __name__ == '__main__':
 
 
-    for i in range(50): print('')
+for i in range(50): print('')
 
-    from uw_opensees.utilities.geometry import Mesh
-    from uw_opensees.viewers import MeshViewer
+from uw_opensees.utilities.geometry import Mesh
+from uw_opensees.viewers import MeshViewer
 
-    w = 10
-    l = 8
-    a = .3
-    b = .3
-    h1 = 1
-    h2 = 1
-    h3 = 1
+w = 20
+l = 16
+a = .3
+b = .3
+h1 = 1
+h2 = 1
+h3 = 1
 
-    thickness = .2
 
-    vertices, faces = make_floor(w, l, a, b, h1, h2, h3)
 
-    mesh = Mesh.from_vertices_and_faces(vertices, faces)
-    # print(mesh)
+vertices, faces = make_floor(w, l, a, b, h1, h2, h3)
 
-    # v = MeshViewer(mesh)
-    # v.show_vertex_labels = True
-    # v.show()
 
-    max_disp = compute_max_disp(mesh, thickness, visualize=True)
+mesh = Mesh.from_vertices_and_faces(vertices, faces)
+print(mesh)
 
+# v = MeshViewer(mesh)
+# v.show_vertex_labels = True
+# v.show()
+
+thickness = .2
+max_disp = compute_max_disp(mesh, thickness, visualize=True)
+print(max_disp)
