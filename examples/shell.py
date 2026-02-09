@@ -157,5 +157,5 @@ print(mesh)
 # v.show()
 
 thickness = .2
-max_disp = compute_max_disp(mesh, thickness, visualize=True)
+max_disp = compute_max_disp(mesh, thickness, visualize=False)
 print(max_disp)
