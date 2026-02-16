@@ -217,12 +217,23 @@ class Structure(NodeMixins, ElementMixins, ObjectMixins):
         return ekeys
         
     def add_gravity_from_mesh(self, mesh, thickness, density):
+
+        for vk in mesh.vertices:
+            mesh.vertex_area[vk] = 0
+
+        for fk in mesh.faces:
+            fv = mesh.faces[fk]
+            vertices = [mesh.vertex_coordinates(vk) for vk in fv]
+            area = area_polygon(vertices)
+            for vk in fv:
+                mesh.vertex_area[vk] += area / len(fv)
+
         num_loads = len(self.loads)
         for vk in mesh.vertices:
-            area = mesh.vertex_area(vk)
+            area = mesh.vertex_area[vk]
             l = area * thickness * density
             nk = self.check_node_exists(mesh.vertex_coordinates(vk))
-            load = PointLoad('gravity_{}'.format(nk), [vk], z=-l)
+            load = PointLoad('gravity_{}'.format(nk), [nk], z=-l)
             self.loads[num_loads] = load
             num_loads += 1
 

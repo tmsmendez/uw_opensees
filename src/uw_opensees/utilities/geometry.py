@@ -332,6 +332,7 @@ class Mesh(object):
         self.faces = {}
         self.face_attributes = {}
         self.default_face_attributes = {}
+        self.vertex_area = {}
 
     @classmethod
     def from_surfaces(cls, surfaces):
