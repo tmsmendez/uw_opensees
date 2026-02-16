@@ -1,11 +1,16 @@
 import uw_opensees
+
+from uw_opensees.utilities.geometry import Mesh
+
 from uw_opensees.structure import Structure
 from uw_opensees.structure import FixedDisplacement
 from uw_opensees.structure import PointLoad
 from uw_opensees.structure import ShellSection
 from uw_opensees.structure import ElasticIsotropic
 from uw_opensees.structure import ElementProperties
+
 from uw_opensees.viewers import StructureViewer
+
 from uw_opensees.fea import remesh_mesh
 
 from uw_opensees.utilities.geometry import length_vector
@@ -54,6 +59,10 @@ def compute_max_disp(vertices, faces, thickness, material='concrete', visualize=
     faces (list): The faces of the mesh used to form the structure. 
 
     thickness (float): The thickness of the floor structure.
+
+    material (string): The choice of material, between concrete, steel, and clt. 
+
+    visualize (boolean): If true, the displacements will be visualized on your default browser. 
 
     Returns
     -------
@@ -145,8 +154,6 @@ def compute_max_disp(vertices, faces, thickness, material='concrete', visualize=
 
 for i in range(50): print('')
 
-from uw_opensees.utilities.geometry import Mesh
-from uw_opensees.viewers import MeshViewer
 
 w = 20
 l = 16
