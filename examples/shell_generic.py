@@ -77,9 +77,11 @@ def compute_max_disp(vertices, faces, thickness, material='concrete', visualize=
 
     s.add_nodes_elements_from_mesh(mesh, 'ShellElement', elset='shell')
 
-    # bound = mesh.vertices_on_boundary()
-    bound = [0,1,2,3]
-
+    bound = []
+    for nk in s.nodes:
+        _,_,z = s.node_xyz(nk)
+        if z <= .001:
+            bound.append(nk)
 
     d = FixedDisplacement('boundary', bound)
     s.add(d)
@@ -116,23 +118,13 @@ def compute_max_disp(vertices, faces, thickness, material='concrete', visualize=
 
     s.add_gravity_from_mesh(mesh, thickness, p)
 
-    # nl = PointLoad('point_load', [8], z=-1000)
-    # s.add_load(nl)
-
-    # if visualize:
-    #     v = StructureViewer(s)
-    #     v.show_node_labels = False
-    #     v.show_point_loads = True
-    #     v.show()
-
-
     s.analyze_static(fields=['u'])
     
     if visualize:
         v = StructureViewer(s)
         v.show_node_labels = False
         v.show_point_loads = False
-        v.static_scale = 1000
+        v.static_scale = 10000
         v.show('static')
 
 
