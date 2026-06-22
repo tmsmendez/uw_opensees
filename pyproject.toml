@@ -1,7 +1,7 @@
 [project]
-name = "uw_opensees"
+name = "pod_lca_buildings_tool"
 version = "0.1.0"
-description = "uw opensees python wrapper"
+description = "pod_lca_buildings_tool"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
@@ -17,12 +17,7 @@ classifiers = [
 
 dependencies = [
     "requests >= 2.25.1",
-    "numpy",
-    "scipy",
-    "pandas",
-    "plotly",
-    "matplotlib",
-    "gmsh",
+    "numpy"
 
 ]
 

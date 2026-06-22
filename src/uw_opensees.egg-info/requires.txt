@@ -1,7 +1,0 @@
-requests>=2.25.1
-numpy
-scipy
-pandas
-plotly
-matplotlib
-gmsh
