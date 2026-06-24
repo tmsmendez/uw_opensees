@@ -9,7 +9,10 @@ from pod_lca.lca_modules.building_envelope import Wall
 
 
 def framed_wall_from_layers_and_framing(name, layers, framing):
-    framed_wall = FramedWall.from_layers_framing(name, layers, framing)
+    layers_ = {}
+    for i, layer in enumerate(layers):
+        layers_[i] = layer
+    framed_wall = FramedWall.from_layers_framing(name, layers_, framing)
     return framed_wall
 
 def wall_from_layers(name, layers):
