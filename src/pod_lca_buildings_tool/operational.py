@@ -13,6 +13,8 @@ def run_operational(building,
                     idf_path=None,
                     weather_file_path=None,
                     ):
+    
+
     if eplus_path:
         building.set_eplus_path(eplus_path)
     if eplus_output_path:
@@ -21,8 +23,8 @@ def run_operational(building,
         building.set_idf_file_path(idf_path)
     if weather_file_path:
         building.set_weather_file_path(weather_file_path)
-
-    building.operational_energy_method = 'eplus' # {'eplus', 'EUIs'}, default is 'eplus'
+    
+    building.operational_energy_method = operational_method
 
     operational_impacts = building.get_operational_impacts()
     return operational_impacts
