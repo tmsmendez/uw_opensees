@@ -26,5 +26,5 @@ def run_operational(building,
     
     building.operational_energy_method = operational_method
 
-    operational_impacts = building.get_operational_impacts()
-    return operational_impacts
+    print(building.get_operational_impacts())
+    # return operational_impacts

@@ -7,5 +7,5 @@ __version__ = "0.1.0"
 
 
 def run_embodied(building):
-    embodied = building.get_impacts(scope='all')
+    embodied = building.get_impacts(scope='product')
     return embodied
